@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Altın Oyuncular</title>
+    <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+    <h1>Altın Oyuncular</h1>
+    <table class="gridtable" align="center">
+        <tr>
+            <th>Id</th>
+            <th>Numara</th>
+            <th>Kullancı</th>
+            <th>Level</th>
+        </tr>
+        {{ range $index,$player := . }}
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{$player.Id}}</td>
+                <td>{{$player.Kullancı}}</td>
+                <td>{{$player.Level}}</td>
+            </tr>
+        {{end}}
+    </table>
+    <br/>
+    <a href="/">Geri Dön</a>
+</body>
