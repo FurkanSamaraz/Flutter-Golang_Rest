@@ -16,15 +16,8 @@ var (
 
 func main() {
 	router.POST("/login", Login)
-	router.GET("/login", anasayfa)
+	router.GET("/login", Loginget)
 	log.Fatal(router.Run(":8080"))
-}
-func anasayfa(c *gin.Context) {
-	//isim değişkenimiz
-	htmlKodu := "<h1>No Tokens</h1>"
-
-	c.JSON(c.Writer.WriteString(htmlKodu))
-
 }
 
 type User struct {
@@ -37,10 +30,13 @@ type User struct {
 var user = User{
 	ID:       1,
 	Username: "Furkan",
-	Password: "202007105034",
+	Password: "Samaraz",
 	Phone:    "202007105034", //this is a random number
 }
 
+func Loginget(c *gin.Context) {
+	c.JSON(http.StatusOK, " NO TOKENS ")
+}
 func Login(c *gin.Context) {
 	var u User
 
@@ -48,6 +44,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
 		return
 	}
+
 	//compare the user from the request, with the one we defined:
 	if user.Username != u.Username || user.Password != u.Password {
 		c.JSON(http.StatusUnauthorized, "Please provide valid login details")
@@ -58,10 +55,6 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
 		return
 	}
-	htmlKodu := "\nHELLO\n"
-
-	c.JSON(c.Writer.WriteString(htmlKodu))
-	c.JSON(c.Writer.WriteString("\n"))
 	c.JSON(http.StatusOK, token)
 }
 func CreateToken(userId uint64) (string, error) {
@@ -77,6 +70,5 @@ func CreateToken(userId uint64) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	return token, nil
 }
