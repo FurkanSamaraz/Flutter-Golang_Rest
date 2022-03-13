@@ -18,5 +18,5 @@ samples, guidance on mobile development, and a full API reference.
 
 # Go and Flutter(ios)
 <img width="323" alt="Ekran Resmi 2022-03-14 02 03 29" src="https://user-images.githubusercontent.com/92402372/158083079-d091f369-eb3c-4eb6-8943-82d6fb40b03b.png"> <img width="323" alt="Ekran Resmi 2022-03-14 00 55 31" src="https://user-images.githubusercontent.com/92402372/158083090-a142d4aa-c8df-4859-abc6-648905c1be08.png">
-# Flutter 
+#
 
