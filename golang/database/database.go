@@ -1,8 +1,12 @@
 package database
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"main/block"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -29,16 +33,29 @@ func GetJson(w http.ResponseWriter, r *http.Request) {
 		peopleData = append(peopleData, dataUs)
 
 	}
+	var dataStr string
+
 	jsonResp, _ := json.MarshalIndent(peopleData, "", "\n")
-	w.Write(jsonResp)
+	dataStr = string(jsonResp)
+
+	bytes := make([]byte, 32) //AES-256 için rastgele bir 32 bayt anahtar oluşturun.
+	if _, err := rand.Read(bytes); err != nil {
+		panic(err.Error())
+	}
+	fmt.Printf("\n")
+	key := hex.EncodeToString(bytes) //anahtarı bayt cinsinden kodlayın ve gizli olarak saklayın, bir kasaya koyun
+	fmt.Printf("key(anahtar) : %s\n", key)
+
+	encrypted := block.Encrypt(dataStr, key)
+	fmt.Printf("encrypted(şifreli) : %s\n", encrypted)
+
+	decrypted := block.Decrypt(encrypted, key)
+	fmt.Printf("decrypted(şifre çözüm) : %s\n", decrypted)
+
+	mySlice := []byte(decrypted)
 
 	defer db.Close()
 	defer vt.Close()
-	return
-
-}
-
-func GGG(w http.ResponseWriter, r *http.Request) {
-	GetJson(w, r)
+	w.Write(mySlice)
 
 }
