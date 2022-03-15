@@ -14,6 +14,7 @@ func main() {
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
 
-	database.GGG(w, r)
+	database.GetJson(w, r)
+	
 
 }
